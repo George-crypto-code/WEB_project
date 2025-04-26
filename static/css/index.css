@@ -1,12 +1,20 @@
-form.main {
-    margin-left: 0px;
+form.main_top {
+    margin-left: 0%;
     height: 75px;
     border-radius: 0px;
     padding: 10px;
     background-color: rgb(60, 60, 60);
 }
-div.button {
-    margin-top: 8px;
+form.main_bottom {
+    margin-left: 0%;
+    margin-top: 20%;
+    height: 100%;
+    border-radius: 0px;
+    padding: 10px;
+    background-color: rgb(60, 60, 60);
+}
+div.button_top {
+    margin-top: 0.5%;
     text-align: right;
 }
 .btn-light {
@@ -19,4 +27,17 @@ div.button {
     color: rgb(255, 255, 255);
     border: 1px solid white;
     border-radius: 20px;
+}
+.large_text_size {
+    font-size: 400%;
+}
+.main_bottom_tex{
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: 180%;
+    color:rgb(163, 163, 163);
+}
+div.center {
+    margin-top: 10%;
+    text-align: center;
 }
