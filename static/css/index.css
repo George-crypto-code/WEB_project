@@ -1,0 +1,22 @@
+form.main {
+    margin-left: 0px;
+    height: 75px;
+    border-radius: 0px;
+    padding: 10px;
+    background-color: rgb(60, 60, 60);
+}
+div.button {
+    margin-top: 8px;
+    text-align: right;
+}
+.btn-light {
+    background-color: white;
+    color: rgb(60, 60, 60);
+    border: 1px solid white;
+    border-radius: 20px;
+}
+.btn-outline-dark {
+    color: rgb(255, 255, 255);
+    border: 1px solid white;
+    border-radius: 20px;
+}

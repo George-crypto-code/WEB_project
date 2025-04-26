@@ -3,31 +3,16 @@
 {% block content %}
 <style>
     body {
-    background-image: url('static/image/back_ground.jpg');
-    }
-    form.main {
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 10px;
-    }
-    div.name {
-    margin-top: 100px;
-    }
-    h1.dline, h3.dline, p.dline {
-    line-height: 100%;
-    }
-    .btn-light {
-    background-color: white;
-    color: black;
-    border: 1px solid white;
-    border-radius: 20px;
-    }
-    .btn-outline-dark {
-    border-radius: 20px;
+    background: linear-gradient(rgba(225, 225, 225, 0.8), rgba(0, 0, 0, 0.5) ), url('static/image/back_ground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top;
     }
 </style>
+<link rel="stylesheet" href={{ styles_css }}>
 <form class="main">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <div class="button">
         <a href="" class="btn btn-light">Information</a>
         <a href="" class="btn btn-light">Sign up</a>
         <a href="" class="btn btn-outline-dark">Sign in</a>
