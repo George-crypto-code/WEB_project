@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+    background-color: rgb(70, 70, 80);
+    }
+</style>
+<link rel="stylesheet" href={{ styles_css }}>
+<form class="main">
+    <h1 class="center">Авторизация</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="email_field">
+            {{ form.username.label }}<br>
+            {{ form.username(class="form-control") }}<br>
+            {% for error in form.username.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="password_field">
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+        </div>
+        <p class="check_button">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p align="center">{{ form.submit(type="submit", class="btn btn-primary login_button") }}</p>
+    </form>
+</form>
+<form class="extra">
+    <div class="extra">Впервые на сайте? <a href="/register" class="extra_link">Создать аккаунт</a></div>
+</form>
+{% endblock %}
