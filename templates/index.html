@@ -12,11 +12,15 @@
 </style>
 <link rel="stylesheet" href={{ styles_css }}>
 <form class="main_top">
-    <div class="button_top">
-        <a href="" class="btn btn-light">Информация</a>
-        <a href="" class="btn btn-light">Зарегистрироваться</a>
-        <a href="/login" class="btn btn-outline-dark">Войти</a>
-    </div>
+    {% if current_user.is_authenticated %}
+        <a href="/logout">{{ current_user.name }}</a>
+    {% else %}
+        <div class="button_top">
+            <a href="" class="btn btn-light">Информация</a>
+            <a href="/register" class="btn btn-light">Зарегистрироваться</a>
+            <a href="/login" class="btn btn-outline-dark">Войти</a>
+        </div>
+    {% endif %}
 </form>
 <div class="center">
     <h1 class="large_text_size">Достигайте финансовых целей с нами!</h1>

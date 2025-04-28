@@ -7,31 +7,30 @@
     }
 </style>
 <link rel="stylesheet" href={{ styles_css }}>
-<form class="main">
+<form action="" method="post" class="main">
     <h1 class="center">Авторизация</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <div class="email_field">
-            {{ form.username.label }}<br>
-            {{ form.username(class="form-control") }}<br>
-            {% for error in form.username.errors %}
-            <div class="alert alert-danger" role="alert">
-                {{ error }}
-            </div>
-            {% endfor %}
+    {{ form.hidden_tag() }}
+    <div class="email_field">
+        {{ form.email.label }}<br>
+        {{ form.email(class="form-control", type="email") }}<br>
+        {% for error in form.email.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
         </div>
-        <div class="password_field">
-            {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password") }}<br>
-            {% for error in form.password.errors %}
-            <div class="alert alert-danger" role="alert">
-                {{ error }}
-            </div>
-            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="password_field">
+        {{ form.password.label }}<br>
+        {{ form.password(class="form-control", type="password") }}<br>
+        {% for error in form.password.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
         </div>
-        <p class="check_button">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p align="center">{{ form.submit(type="submit", class="btn btn-primary login_button") }}</p>
-    </form>
+        {% endfor %}
+    </div>
+    <p class="check_button">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+    <p align="center">{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <div>{{ message }}</div>
 </form>
 <form class="extra">
     <div class="extra">Впервые на сайте? <a href="/register" class="extra_link">Создать аккаунт</a></div>

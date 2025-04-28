@@ -1,0 +1,67 @@
+form.main {
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    max-width: 40%;
+    border: 2px, solid rgb(100, 100, 100);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(36, 36, 44);
+}
+form.extra {
+    margin: auto;
+    margin-top: 5%;
+    max-width: 40%;
+    height: 80px;
+    border: 2px, solid rgb(100, 100, 100);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(36, 36, 44);
+}
+.center {
+    text-align: center;
+    margin-top: 5%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:antiquewhite
+}
+.email_field {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 80%;
+    color:antiquewhite;
+    margin: auto;
+}
+
+.password_field {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 80%;
+    color:antiquewhite;
+    margin: auto;
+}
+.password_field_again {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 80%;
+    color:antiquewhite;
+    margin: auto;
+}
+.name_field {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 80%;
+    color:antiquewhite;
+    margin: auto;
+}
+.button_submit {
+    border: 1px, solid rgb(50, 160, 100);
+    width: 200px;
+    border-radius: 10px;
+    background-color: rgb(0, 121, 46);
+}
+.extra {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:antiquewhite;
+    margin-left: 18%;
+    margin-right: 10%;
+    margin-top: 3%;
+}
+.extra_link {
+    margin-left: 10%;
+}
