@@ -29,9 +29,11 @@ div.button_top {
     border-radius: 20px;
 }
 .large_text_size {
-    font-size: 400%;
+    font-size: 350%;
+    font-family: 'Bookman Old Style';
 }
 .button_text_size {
+    margin-top: 2%;
     font-size: 200%;
 }
 .main_bottom_tex{
@@ -39,6 +41,15 @@ div.button_top {
     margin-left: 5%;
     font-size: 180%;
     color:rgb(163, 163, 163);
+}
+.link_text {
+    font-family: 'Bookman Old Style';
+    color:antiquewhite;
+    font-size: 180%;
+}
+div.link_area {
+    text-align: right;
+    margin-right: 5%;
 }
 div.center {
     margin-top: 10%;
