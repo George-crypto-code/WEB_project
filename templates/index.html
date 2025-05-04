@@ -10,31 +10,37 @@
     background-position: top;
     }
 </style>
-<link rel="stylesheet" href={{ styles_css }}>
+<link rel="stylesheet" href={{styles_css}}>
 <form class="main_top">
     {% if current_user.is_authenticated %}
-        <div class="link_area">
-            <a href="/logout" class="link_text">{{ current_user.name }}</a>
-        </div>
+    <div class="register">
+        <a href="/information" class="btn btn-information">Информация</a>
+        <a href="/assets" class="btn btn-assets">Ваши активы</a>
+        <a href="/logout" class="link_text">{{current_user.name}}</a>
+    </div>
     {% else %}
-        <div class="button_top">
-            <a href="" class="btn btn-light">Информация</a>
-            <a href="/register" class="btn btn-light">Зарегистрироваться</a>
-            <a href="/login" class="btn btn-outline-dark">Войти</a>
-        </div>
+    <div class="unregister">
+        <a href="/information" class="btn btn-information">Информация</a>
+        <a href="/register" class="btn btn-register">Зарегистрироваться</a>
+        <a href="/login" class="btn btn-login">Войти</a>
+    </div>
     {% endif %}
 </form>
 <div class="center">
-    <h1 class="large_text_size">Достигайте финансовых целей с нами!</h1>
+    <h1 class="large_text_size">Достигай финансовых целей с нами!</h1>
     <h3> Учёт и анализ своего бюджета</h3>
-    <a href="/login" class="btn btn-dark button_text_size">Начать бесплатно</a>
+    <a href="/login" class="btn btn-start-free">Начать бесплатно</a>
 </div>
 <form class="main_bottom">
-    <img src="{{ photo }}" width="30%" height="30%" align="right" alt="здесь должна была быть картинка, но не нашлась">
-    <p class="main_bottom_tex">Добро пожаловать на наш сайт — ваш</p>
-    <p class="main_bottom_tex">надежный помощник в управлении личными финансами!</p>
-    <p class="main_bottom_tex">Мы предлагаем простые и удобные инструменты для</p>
-    <p class="main_bottom_tex">отслеживания доходов и расходов, планирования</p>
-    <p class="main_bottom_tex">бюджета и достижения ваших финансовых целей.</p>
+    {% if current_user.is_authenticated %}
+    <form></form>
+    {% else %}
+    <img src="{{photo}}" width="30%" height="30%" align="right" alt="здесь должна была быть картинка, но не нашлась">
+    <p class="main_bottom_text">Добро пожаловать на наш сайт — ваш</p>
+    <p class="main_bottom_text">надежный помощник в управлении личными финансами!</p>
+    <p class="main_bottom_text">Мы предлагаем простые и удобные инструменты для</p>
+    <p class="main_bottom_text">отслеживания доходов и расходов, планирования</p>
+    <p class="main_bottom_text">бюджета и достижения ваших финансовых целей.</p>
+    {% endif %}
 </form>
 {% endblock %}

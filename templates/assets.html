@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+    background-color: rgb(80, 80, 90);
+    }
+</style>
+<link rel="stylesheet" href={{styles_css}}>
+<form class="main_top">
+    <a href="/" class="btn btn-home">Домой</a>
+</form>
+
+<div class="row">
+    <form class="assets">
+        <a href="/assets/add/share" class="btn btn-add-asset">Добавить пакет акций</a>
+        <a href="/assets/shares" class="btn btn-look-asset">Посмотреть всё</a>
+    </form>
+    <form class="assets-info">
+
+    </form>
+</div>
+<div class="row">
+    <form class="assets">
+        <a href="/assets/add/property" class="btn btn-add-asset">Добавить недвижимость</a>
+        <a href="/assets/properties" class="btn btn-look-asset">Посмотреть всё</a>
+    </form>
+    <form class="assets-info">
+
+    </form>
+</div>
+<div class="row">
+    <form class="assets">
+        <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Добавить криптовалюту</a>
+        <a href="/assets/cryptocurrencies" class="btn btn-look-asset">Посмотреть всё</a>
+    </form>
+    <form class="assets-info">
+
+    </form>
+</div>
+{% endblock %}

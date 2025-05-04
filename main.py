@@ -1,9 +1,15 @@
 from flask import Flask, render_template, url_for, redirect
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
+from forms.add_share import AddShareForm
+from forms.add_property import AddPropertyForm
+from forms.add_cryptocurrency import AddCryptocurrencyForm
 from data import db_session
 from data.users import User
+from data.shares import Shares
+from data.property import Property
+from data.cryptocurrency import Cryptocurrency
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'my_very_secret_key'
@@ -59,6 +65,58 @@ def login():
             return redirect("/")
         return render_template('login.html', message="Неправильный логин или пароль", styles_css=styles_css, form=form)
     return render_template('login.html', title='Авторизация', styles_css=styles_css, form=form)
+
+
+@app.route('/information')
+def information():
+    styles_css = url_for('static', filename='css/information.css')
+    return render_template('information.html', title='О сайте', styles_css=styles_css)
+
+
+@app.route('/assets')
+def assets():
+    styles_css = url_for('static', filename='css/assets.css')
+    return render_template('assets.html', title='Активы', styles_css=styles_css)
+
+
+@app.route('/assets/add/<asset_type>', methods=['GET', 'POST'])
+def add(asset_type):
+    styles_css = url_for('static', filename='css/add.css')
+    if asset_type == "share":
+        form = AddShareForm()
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            share = Shares()
+            share.company = form.company.data
+            share.amount = form.amount.data
+            current_user.shares.append(share)
+            db_sess.merge(current_user)
+            db_sess.commit()
+            return redirect('/')
+    elif asset_type == "property":
+        form = AddPropertyForm()
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            share = Property()
+            share.type = form.type.data
+            share.amount = form.amount.data
+            share.city = form.city.data
+            current_user.property.append(share)
+            db_sess.merge(current_user)
+            db_sess.commit()
+            return redirect('/')
+    else:
+        form = AddCryptocurrencyForm()
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            share = Cryptocurrency()
+            share.name = form.name.data
+            share.amount = form.amount.data
+            current_user.cryptocurrency.append(share)
+            db_sess.merge(current_user)
+            db_sess.commit()
+            return redirect('/')
+    return render_template('add.html', title='Активы', styles_css=styles_css, asset_type=asset_type, form=form)
 
 
 @app.route('/logout')
