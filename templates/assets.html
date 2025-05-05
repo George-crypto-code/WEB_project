@@ -13,7 +13,10 @@
 
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/share" class="btn btn-add-asset">Добавить пакет акций</a>
+        <a href="/assets/add/share" class="btn btn-add-asset">Купить пакет акций</a>
+        <p>{{last_share.company}}</p>
+        <p>{{last_share.amount}}</p>
+        <p>{{last_share.original_price}}</p>
         <a href="/assets/shares" class="btn btn-look-asset">Посмотреть всё</a>
     </form>
     <form class="assets-info">
@@ -22,8 +25,11 @@
 </div>
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/property" class="btn btn-add-asset">Добавить недвижимость</a>
-        <a href="/assets/properties" class="btn btn-look-asset">Посмотреть всё</a>
+        <a href="/assets/add/currency" class="btn btn-add-asset">Купить валюту</a>
+        <p>{{last_currency.name}}</p>
+        <p>{{last_currency.amount}}</p>
+        <p>{{last_currency.original_price}}</p>
+        <a href="/assets/currencies" class="btn btn-look-asset">Посмотреть всё</a>
     </form>
     <form class="assets-info">
 
@@ -31,7 +37,10 @@
 </div>
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Добавить криптовалюту</a>
+        <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Купить криптовалюту</a>
+        <p>{{last_cryptocurrency.name}}</p>
+        <p>{{last_cryptocurrency.amount}}</p>
+        <p>{{last_cryptocurrency.original_price}}</p>
         <a href="/assets/cryptocurrencies" class="btn btn-look-asset">Посмотреть всё</a>
     </form>
     <form class="assets-info">

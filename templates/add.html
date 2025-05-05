@@ -37,14 +37,14 @@
     {{message}}
 
 
-    {% elif asset_type == 'property' %}
+    {% elif asset_type == 'currency' %}
 
 
     {{ form.hidden_tag() }}
     <div>
-        {{ form.type.label }}<br>
-        {{ form.type(class="form-control") }}<br>
-        {% for error in form.type.errors %}
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}<br>
+        {% for error in form.name.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
             </p>
@@ -54,15 +54,6 @@
         {{ form.amount.label }}<br>
         {{ form.amount(class="form-control") }}<br>
         {% for error in form.amount.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </div>
-    <div>
-        {{ form.city.label }}<br>
-        {{ form.city(class="form-control") }}<br>
-        {% for error in form.city.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
             </p>

@@ -5,6 +5,6 @@ from wtforms.validators import DataRequired
 
 
 class AddCryptocurrencyForm(FlaskForm):
-    name = StringField('Название', validators=[DataRequired()])
+    name = StringField("'ID криптовалюты (например, 'bitcoin', 'ethereum' и др.)'", validators=[DataRequired()])
     amount = StringField('Кол-во', validators=[DataRequired()])
     submit = SubmitField('Купить')

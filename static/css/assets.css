@@ -41,8 +41,8 @@ form.assets-info {
     border: 1px solid darkgray;
 }
 .btn-look-asset {
-    margin-top: 218px;
     width: 100%;
+    margin-top: 0%;
     background-color:white;
     color: rgb(60, 60, 60);
     border: 1px solid gray;

@@ -12,7 +12,7 @@ class User(SqlAlchemyBase, UserMixin):
     email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     shares = orm.relationship("Shares", back_populates='user')
-    property = orm.relationship("Property", back_populates='user')
+    currency = orm.relationship("Currency", back_populates='user')
     cryptocurrency = orm.relationship("Cryptocurrency", back_populates='user')
 
     def set_password(self, password):

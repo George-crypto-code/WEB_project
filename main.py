@@ -3,12 +3,13 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
 from forms.add_share import AddShareForm
-from forms.add_property import AddPropertyForm
+from forms.add_currency import AddCurrencyForm
 from forms.add_cryptocurrency import AddCryptocurrencyForm
 from data import db_session
+from data.get_prices import *
 from data.users import User
 from data.shares import Shares
-from data.property import Property
+from data.currency import Currency
 from data.cryptocurrency import Cryptocurrency
 
 app = Flask(__name__)
@@ -76,7 +77,12 @@ def information():
 @app.route('/assets')
 def assets():
     styles_css = url_for('static', filename='css/assets.css')
-    return render_template('assets.html', title='Активы', styles_css=styles_css)
+    db_sess = db_session.create_session()
+    last_share = db_sess.query(Shares).filter(Shares.user_id == current_user.id).first()
+    last_currency = db_sess.query(Currency).filter(Currency.user_id == current_user.id).first()
+    last_cryptocurrency = db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).first()
+    return render_template('assets.html', title='Активы', styles_css=styles_css, last_share=last_share,
+                           last_currency=last_currency, last_cryptocurrency=last_cryptocurrency)
 
 
 @app.route('/assets/add/<asset_type>', methods=['GET', 'POST'])
@@ -89,19 +95,20 @@ def add(asset_type):
             share = Shares()
             share.company = form.company.data
             share.amount = form.amount.data
+            share.original_price = float(form.amount.data) * float(round(get_stock_price(form.company.data), 2))
             current_user.shares.append(share)
             db_sess.merge(current_user)
             db_sess.commit()
             return redirect('/')
-    elif asset_type == "property":
-        form = AddPropertyForm()
+    elif asset_type == "currency":
+        form = AddCurrencyForm()
         if form.validate_on_submit():
             db_sess = db_session.create_session()
-            share = Property()
-            share.type = form.type.data
-            share.amount = form.amount.data
-            share.city = form.city.data
-            current_user.property.append(share)
+            currency = Currency()
+            currency.name = form.name.data
+            currency.amount = form.amount.data
+            currency.original_price = float(form.amount.data) * float(get_cbr_currency_rate(form.name.data.upper().strip()))
+            current_user.currency.append(currency)
             db_sess.merge(current_user)
             db_sess.commit()
             return redirect('/')
@@ -109,10 +116,11 @@ def add(asset_type):
         form = AddCryptocurrencyForm()
         if form.validate_on_submit():
             db_sess = db_session.create_session()
-            share = Cryptocurrency()
-            share.name = form.name.data
-            share.amount = form.amount.data
-            current_user.cryptocurrency.append(share)
+            cryptocurrency = Cryptocurrency()
+            cryptocurrency.name = form.name.data
+            cryptocurrency.amount = form.amount.data
+            cryptocurrency.original_price = float(form.amount.data) * float(round(get_crypto_price(form.name.data), 2))
+            current_user.cryptocurrency.append(cryptocurrency)
             db_sess.merge(current_user)
             db_sess.commit()
             return redirect('/')
