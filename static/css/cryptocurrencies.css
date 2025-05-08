@@ -48,7 +48,7 @@ div.assets-form {
     color: rgb(30, 30, 30);
     border: 1px solid darkgray;
 }
-.btn-look-asset {
+.btn-delete-asset {
     width: 100%;
     margin-top: 0%;
     background-color:white;
@@ -56,19 +56,19 @@ div.assets-form {
     border: 1px solid gray;
     border-radius: 5px;
 }
-.btn-look-asset:hover {
+.btn-delete-asset:hover {
     background-color: grey;
     color: rgb(30, 30, 30);
     border: 1px solid darkgray;
 }
-.btn-home {
+.btn-white {
     margin-top: 0.5%;
     background-color: white;
     color: rgb(60, 60, 60);
     border: 1px solid white;
     border-radius: 10px;
 }
-.btn-home:hover {
+.btn-white:hover {
     background-color: rgb(180, 180, 180);
     color: rgb(30, 30, 30);
     border: 1px solid white;

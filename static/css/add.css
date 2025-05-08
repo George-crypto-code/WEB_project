@@ -11,14 +11,18 @@ form.main_top {
     backdrop-filter: blur(8px);
 }
 form.add-form {
+    text-align: center;
     margin: auto;
     margin-top: 10%;
     height: 400px;
-    width: 60%;
-    padding: 10px;
+    width: 50%;
+    padding: 80px;
     border: 3px solid gray;
     border-radius: 10px;
     background-color: rgb(70, 70, 70);
+}
+.name {
+    color:aliceblue;
 }
 .btn-home {
     margin-top: 0.5%;
@@ -31,4 +35,22 @@ form.add-form {
     background-color: rgb(180, 180, 180);
     color: rgb(30, 30, 30);
     border: 1px solid white;
+}
+.btn-sell {
+    font-size: 150%;
+    color: white;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgb(0, 121, 46);
+    border: 1px, solid rgb(0, 100, 30);
+    width: 20%;
+}
+.btn-sell:hover {
+    font-size: 150%;
+    color: white;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgb(10, 131, 56);
+    border: 1px, solid rgb(10, 110, 40);
+    width: 20%;
 }

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style>
+    body {
+    background-color: rgb(80, 80, 90);
+    }
+</style>
+<link rel="stylesheet" href={{styles_css}}>
+<form class="main_top">
+    <a href="/" class="btn btn-white">Домой</a>
+    <a href="/assets" class="btn btn-white">Назад</a>
+    <a href="/assets/add/share" class="btn btn-white">Купить пакет акций</a>
+</form>
+{% for share in all_shares %}
+<div class="row">
+    <form class="assets">
+        <div class="white-area"></div>
+        <div class="assets-form">
+            <h3 class="white">Транзакция акций №{{share.id}}</h3>
+            <p>Тикер компании: {{share.company}}</p>
+            <p>Количество акций: {{share.amount}}</p>
+        </div>
+        <a href="/assets/share_delete/{{share.id}}" class="btn btn-delete-asset">Продать пакет акций</a>
+    </form>
+    <form class="assets-info">
+        <div class="white-area"> </div>
+        <div class="assets-form">
+            <p>Текущая цена одной акции: {{extra_data[loop.index0][0]}} руб</p>
+            <p>Начальная цена покупки: {{share.original_price}} руб</p>
+            <p>Текущая цена покупки: {{extra_data[loop.index0][1]}} руб</p>
+            <p>Общий доход: {{extra_data[loop.index0][2]}} %</p>
+        </div>
+        <div class="white-area"> </div>
+    </form>
+</div>
+{% endfor %}
+{% endblock %}

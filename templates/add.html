@@ -15,25 +15,25 @@
 
 
     {{ form.hidden_tag() }}
-    <div>
+    <div class="name">
         {{ form.company.label }}<br>
         {{ form.company(class="form-control") }}<br>
         {% for error in form.company.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <div>
+    <div class="name">
         {{ form.amount.label }}<br>
         {{ form.amount(class="form-control") }}<br>
         {% for error in form.amount.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
     {{message}}
 
 
@@ -41,25 +41,25 @@
 
 
     {{ form.hidden_tag() }}
-    <div>
+    <div class="name">
         {{ form.name.label }}<br>
         {{ form.name(class="form-control") }}<br>
         {% for error in form.name.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <div>
+    <div class="name">
         {{ form.amount.label }}<br>
         {{ form.amount(class="form-control") }}<br>
         {% for error in form.amount.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
     {{message}}
 
 
@@ -67,25 +67,25 @@
 
 
     {{ form.hidden_tag() }}
-    <div>
+    <div class="name">
         {{ form.name.label }}<br>
         {{ form.name(class="form-control") }}<br>
         {% for error in form.name.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <div>
+    <div class="name">
         {{ form.amount.label }}<br>
         {{ form.amount(class="form-control") }}<br>
         {% for error in form.amount.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
     {{message}}
     {% endif %}
 </form>

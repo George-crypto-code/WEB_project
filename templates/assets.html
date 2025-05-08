@@ -14,37 +14,76 @@
 <div class="row">
     <form class="assets">
         <a href="/assets/add/share" class="btn btn-add-asset">Купить пакет акций</a>
-        <p>{{last_share.company}}</p>
-        <p>{{last_share.amount}}</p>
-        <p>{{last_share.original_price}}</p>
+        {% if last_share %}
+        <div class="assets-form">
+            <h3 class="white">Последняя транзакция акций</h3>
+            <p>Тикер компании: {{last_share.company}}</p>
+            <p>Количество акций: {{last_share.amount}}</p>
+        </div>
         <a href="/assets/shares" class="btn btn-look-asset">Посмотреть всё</a>
+        {% endif %}
     </form>
     <form class="assets-info">
-
+        <div class="white-area"> </div>
+        <div class="assets-form">
+            {% if last_share %}
+            <p>Текущая цена одной акции: {{price_for_one_asset[0]}} USD</p>
+            <p>Начальная цена покупки: {{last_share.original_price}} USD</p>
+            <p>Текущая цена покупки: {{current_price[0]}} USD</p>
+            <p>Общий доход: {{profit[0]}} %</p>
+            {% endif %}
+        </div>
+        <div class="white-area"> </div>
     </form>
 </div>
 <div class="row">
     <form class="assets">
         <a href="/assets/add/currency" class="btn btn-add-asset">Купить валюту</a>
-        <p>{{last_currency.name}}</p>
-        <p>{{last_currency.amount}}</p>
-        <p>{{last_currency.original_price}}</p>
+        {% if last_currency %}
+        <div class="assets-form">
+            <h3 class="white">Последняя транзакция валютой</h3>
+            <p>Код валюты: {{last_currency.name}}</p>
+            <p>Количество: {{last_currency.amount}}</p>
+        </div>
         <a href="/assets/currencies" class="btn btn-look-asset">Посмотреть всё</a>
+        {% endif %}
     </form>
     <form class="assets-info">
-
+        <div class="white-area"> </div>
+        <div class="assets-form">
+            {% if last_currency %}
+            <p>Текущая цена валюты: {{price_for_one_asset[1]}} руб</p>
+            <p>Начальная цена покупки: {{last_currency.original_price}} руб</p>
+            <p>Текущая цена покупки: {{current_price[1]}} руб</p>
+            <p>Общий доход: {{profit[1]}} %</p>
+            {% endif %}
+        </div>
+        <div class="white-area"> </div>
     </form>
 </div>
 <div class="row">
     <form class="assets">
         <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Купить криптовалюту</a>
-        <p>{{last_cryptocurrency.name}}</p>
-        <p>{{last_cryptocurrency.amount}}</p>
-        <p>{{last_cryptocurrency.original_price}}</p>
+        {% if last_cryptocurrency %}
+        <div class="assets-form">
+            <h3 class="white">Последняя транзакция криптовалютой</h3>
+            <p>Наименование криптовалюты: {{last_cryptocurrency.name}}</p>
+            <p>Количество: {{last_cryptocurrency.amount}}</p>
+        </div>
         <a href="/assets/cryptocurrencies" class="btn btn-look-asset">Посмотреть всё</a>
+        {% endif %}
     </form>
     <form class="assets-info">
-
+        <div class="white-area"> </div>
+        <div class="assets-form">
+            {% if last_cryptocurrency %}
+            <p>Текущая цена криптовалюты: {{price_for_one_asset[2]}} USD</p>
+            <p>Начальная цена покупки: {{last_cryptocurrency.original_price}} USD</p>
+            <p>Текущая цена покупки: {{current_price[2]}} USD</p>
+            <p>Общий доход: {{profit[2]}} %</p>
+            {% endif %}
+        </div>
+        <div class="white-area"> </div>
     </form>
 </div>
 {% endblock %}

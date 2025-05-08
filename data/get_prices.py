@@ -32,5 +32,5 @@ def get_crypto_price(coin_id):
     cg = CoinGeckoAPI()
     price_data = cg.get_price(ids=coin_id, vs_currencies=vs_currency)
     if price_data:
-        price = price_data[coin_id][vs_currency]
+        price = price_data[coin_id.lower()][vs_currency]
         return price

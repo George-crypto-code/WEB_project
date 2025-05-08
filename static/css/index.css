@@ -91,6 +91,17 @@ div.register {
     border: 1px, solid rgb(10, 110, 40);
     width: 20%;
 }
+.btn-account {
+    color: rgb(255, 255, 255);
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.btn-account:hover {
+    background-color: rgb(60, 60, 60);
+    color: rgb(120, 120, 120);
+    border: 1px solid darkgray;
+    border-radius: 10px;
+}
 .large_text_size {
     font-size: 350%;
     font-family: 'Bookman Old Style';

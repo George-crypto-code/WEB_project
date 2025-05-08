@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style>
+    body {
+    background-color: rgb(80, 80, 90);
+    }
+</style>
+<link rel="stylesheet" href={{styles_css}}>
+<form class="main_top">
+    <a href="/" class="btn btn-white">Домой</a>
+    <a href="/assets" class="btn btn-white">Назад</a>
+    <a href="/assets/add/cryptocurrency" class="btn btn-white">Купить криптовалюту</a>
+</form>
+{% for cryptocurrency in all_cryptocurrencies %}
+<div class="row">
+    <form class="assets">
+        <div class="white-area"></div>
+        <div class="assets-form">
+            <h3 class="white">Транзакция акций №{{cryptocurrency.id}}</h3>
+            <p>Код криптовалюты: {{cryptocurrency.name}}</p>
+            <p>Количество криптовалюты: {{cryptocurrency.amount}}</p>
+        </div>
+        <a href="/assets/cryptocurrency_delete/{{cryptocurrency.id}}" class="btn btn-delete-asset">Продать криптовалюту</a>
+    </form>
+    <form class="assets-info">
+        <div class="white-area"> </div>
+        <div class="assets-form">
+            <p>Текущая цена одной акции: {{extra_data[loop.index0][0]}} USD</p>
+            <p>Начальная цена покупки: {{cryptocurrency.original_price}} USD</p>
+            <p>Текущая цена покупки: {{extra_data[loop.index0][1]}} USD</p>
+            <p>Общий доход: {{extra_data[loop.index0][2]}} %</p>
+        </div>
+        <div class="white-area"> </div>
+    </form>
+</div>
+{% endfor %}
+{% endblock %}
