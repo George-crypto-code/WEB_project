@@ -12,7 +12,7 @@ form.main_top {
 }
 form.assets {
     margin-top: 6%;
-    margin-left: 12.5%;
+    margin-left: 15%;
     height: 300px;
     width: 40%;
     border: 3px solid gray;
@@ -21,7 +21,6 @@ form.assets {
 }
 form.assets-info {
     margin-top: 6%;
-    margin-left: 5%;
     height: 300px;
     width: 30%;
     border: 3px solid gray;
@@ -30,7 +29,7 @@ form.assets-info {
 }
 div.assets-form {
     color:aliceblue;
-    padding: 10px;
+    padding-top: 30px;
     text-align: center;
     height: 218px;
     border: 2px solid rgb(200, 200, 200);

@@ -16,7 +16,7 @@
     <div class="register">
         <a href="/information" class="btn btn-information">Информация</a>
         <a href="/assets" class="btn btn-assets">Ваши активы</a>
-        <a href="/logout" class="btn btn-account">{{current_user.name}}</a>
+        <a href="/profile"><img src="{{profile_image}}" width="42px" height="42px" alt="здесь должна была быть картинка, но не нашлась"></a>
     </div>
     {% else %}
     <div class="unregister">
@@ -29,11 +29,86 @@
 <div class="center">
     <h1 class="large_text_size">Достигай финансовых целей с нами!</h1>
     <h3> Учёт и анализ своего бюджета</h3>
+    {% if current_user.is_authenticated %}
+    <a href="/tariff" class="btn btn-start-free">Купить тариф</a>
+    {% else %}
     <a href="/login" class="btn btn-start-free">Начать бесплатно</a>
+    {% endif %}
 </div>
 <form class="main_bottom">
     {% if current_user.is_authenticated %}
-    <form></form>
+    <div class="assets">
+        <a href="/assets" class="btn btn-start-free">Добавить активы</a>
+        {% if all_assets[0] %}
+        <h3>Акции</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                <th scope="col" class="center">Тикер компании</th>
+                <th scope="col" class="center">Общее количество акций</th>
+                <th scope="col" class="center">Общая начальная цена</th>
+                <th scope="col" class="center">Прибыль при продаже</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for share in all_assets[0] %}
+            <tr>
+                <th scope="row">{{share}}</th>
+                <td>{{all_assets[0][share]["amount"]}}</td>
+                <td>{{all_assets[0][share]["original_price"]}} USD</td>
+                <td>{{all_assets[0][share]["current_price"] - all_assets[0][share]["original_price"]}} USD</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if all_assets[1] %}
+        <h3>Валюты</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                <th scope="col" class="center">Код валюты</th>
+                <th scope="col" class="center">Общее количество валюты</th>
+                <th scope="col" class="center">Общая начальная цена</th>
+                <th scope="col" class="center">Прибыль при продаже</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for currency in all_assets[1] %}
+            <tr>
+                <th scope="row">{{currency}}</th>
+                <td>{{all_assets[1][currency]["amount"]}}</td>
+                <td>{{all_assets[1][currency]["original_price"]}} руб</td>
+                <td>{{all_assets[1][currency]["current_price"] - all_assets[1][currency]["original_price"]}} руб</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if all_assets[2] %}
+        <h3>Криптовалюты</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                <th scope="col" class="center">Код криптовалюты</th>
+                <th scope="col" class="center">Общее количество криптовалюты</th>
+                <th scope="col" class="center">Общая начальная цена</th>
+                <th scope="col" class="center">Прибыль при продаже</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cryptocurrency in all_assets[2] %}
+            <tr>
+                <th scope="row">{{cryptocurrency}}</th>
+                <td>{{all_assets[2][cryptocurrency]["amount"]}}</td>
+                <td>{{all_assets[2][cryptocurrency]["original_price"]}} USD</td>
+                <td>{{all_assets[2][cryptocurrency]["current_price"] - all_assets[2][cryptocurrency]["original_price"]}} USD</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
     {% else %}
     <img src="{{photo}}" width="30%" height="30%" align="right" alt="здесь должна была быть картинка, но не нашлась">
     <p class="main_bottom_text">Добро пожаловать на наш сайт — ваш</p>

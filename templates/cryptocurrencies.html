@@ -11,7 +11,7 @@
 <form class="main_top">
     <a href="/" class="btn btn-white">Домой</a>
     <a href="/assets" class="btn btn-white">Назад</a>
-    <a href="/assets/add/cryptocurrency" class="btn btn-white">Купить криптовалюту</a>
+    <a href="/assets/add/cryptocurrency" class="btn btn-white">Добавить криптовалюту</a>
 </form>
 {% for cryptocurrency in all_cryptocurrencies %}
 <div class="row">
@@ -22,7 +22,7 @@
             <p>Код криптовалюты: {{cryptocurrency.name}}</p>
             <p>Количество криптовалюты: {{cryptocurrency.amount}}</p>
         </div>
-        <a href="/assets/cryptocurrency_delete/{{cryptocurrency.id}}" class="btn btn-delete-asset">Продать криптовалюту</a>
+        <a href="/assets/cryptocurrency_delete/{{cryptocurrency.id}}" class="btn btn-delete-asset">Убрать криптовалюту</a>
     </form>
     <form class="assets-info">
         <div class="white-area"> </div>

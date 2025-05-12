@@ -10,7 +10,7 @@
 <form class="extra">
     <div class="extra">Уже есть аккаунт? <a href="/login" class="extra_link">Войти в аккаунт</a></div>
 </form>
-<form action="" method="post" class="main">
+<form method="post" enctype="multipart/form-data" class="main">
     <h1 class="center">Регистрация</h1>
     {{ form.hidden_tag() }}
     <div class="email_field">
@@ -44,6 +44,15 @@
         {{ form.name.label }}<br>
         {{ form.name(class="form-control") }}<br>
         {% for error in form.name.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+    </div>
+    <div class="image_field">
+        {{ form.image.label }}<br>
+        {{ form.image(class="form-control-file", type="file") }}<br>
+        {% for error in form.image.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
         </p>

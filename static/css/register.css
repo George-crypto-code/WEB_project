@@ -49,6 +49,12 @@ form.extra {
     color:antiquewhite;
     margin: auto;
 }
+.image_field {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 80%;
+    color:antiquewhite;
+    margin: auto;
+}
 .button_submit {
     border: 1px, solid rgb(50, 160, 100);
     width: 200px;

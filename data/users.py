@@ -8,9 +8,10 @@ from .db_session import SqlAlchemyBase
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=True)
-    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=False)
+    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    image = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     shares = orm.relationship("Shares", back_populates='user')
     currency = orm.relationship("Currency", back_populates='user')
     cryptocurrency = orm.relationship("Cryptocurrency", back_populates='user')

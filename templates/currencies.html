@@ -11,7 +11,7 @@
 <form class="main_top">
     <a href="/" class="btn btn-white">Домой</a>
     <a href="/assets" class="btn btn-white">Назад</a>
-    <a href="/assets/add/currency" class="btn btn-white">Купить валюты</a>
+    <a href="/assets/add/currency" class="btn btn-white">Добавить валюты</a>
 </form>
 {% for currency in all_currencies %}
 <div class="row">
@@ -22,7 +22,7 @@
             <p>Код валюты: {{currency.name}}</p>
             <p>Количество валюты: {{currency.amount}}</p>
         </div>
-        <a href="/assets/currency_delete/{{currency.id}}" class="btn btn-delete-asset">Продать валюту</a>
+        <a href="/assets/currency_delete/{{currency.id}}" class="btn btn-delete-asset">Убрать валюту</a>
     </form>
     <form class="assets-info">
         <div class="white-area"> </div>

@@ -7,4 +7,4 @@ from wtforms.validators import DataRequired
 class AddCurrencyForm(FlaskForm):
     name = StringField('Код валюты (USD, EUR, CNY и др.)', validators=[DataRequired()])
     amount = StringField('Кол-во', validators=[DataRequired()])
-    submit = SubmitField('Купить')
+    submit = SubmitField('Добавить')

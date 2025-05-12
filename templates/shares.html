@@ -11,7 +11,7 @@
 <form class="main_top">
     <a href="/" class="btn btn-white">Домой</a>
     <a href="/assets" class="btn btn-white">Назад</a>
-    <a href="/assets/add/share" class="btn btn-white">Купить пакет акций</a>
+    <a href="/assets/add/share" class="btn btn-white">Добавить пакет акций</a>
 </form>
 {% for share in all_shares %}
 <div class="row">
@@ -22,7 +22,7 @@
             <p>Тикер компании: {{share.company}}</p>
             <p>Количество акций: {{share.amount}}</p>
         </div>
-        <a href="/assets/share_delete/{{share.id}}" class="btn btn-delete-asset">Продать пакет акций</a>
+        <a href="/assets/share_delete/{{share.id}}" class="btn btn-delete-asset">Убрать пакет акций</a>
     </form>
     <form class="assets-info">
         <div class="white-area"> </div>

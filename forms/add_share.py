@@ -7,4 +7,4 @@ from wtforms.validators import DataRequired
 class AddShareForm(FlaskForm):
     company = StringField('Тикер акции (например, AAPL для Apple)', validators=[DataRequired()])
     amount = StringField('Кол-во', validators=[DataRequired()])
-    submit = SubmitField('Купить')
+    submit = SubmitField('Добавить')

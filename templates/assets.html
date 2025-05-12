@@ -13,7 +13,7 @@
 
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/share" class="btn btn-add-asset">Купить пакет акций</a>
+        <a href="/assets/add/share" class="btn btn-add-asset">Добавить пакет акций</a>
         {% if last_share %}
         <div class="assets-form">
             <h3 class="white">Последняя транзакция акций</h3>
@@ -21,6 +21,9 @@
             <p>Количество акций: {{last_share.amount}}</p>
         </div>
         <a href="/assets/shares" class="btn btn-look-asset">Посмотреть всё</a>
+        {% else %}
+        <div class="assets-form"></div>
+        <div class="white-area"> </div>
         {% endif %}
     </form>
     <form class="assets-info">
@@ -38,7 +41,7 @@
 </div>
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/currency" class="btn btn-add-asset">Купить валюту</a>
+        <a href="/assets/add/currency" class="btn btn-add-asset">Добавить валюту</a>
         {% if last_currency %}
         <div class="assets-form">
             <h3 class="white">Последняя транзакция валютой</h3>
@@ -46,6 +49,9 @@
             <p>Количество: {{last_currency.amount}}</p>
         </div>
         <a href="/assets/currencies" class="btn btn-look-asset">Посмотреть всё</a>
+        {% else %}
+        <div class="assets-form"></div>
+        <div class="white-area"> </div>
         {% endif %}
     </form>
     <form class="assets-info">
@@ -63,7 +69,7 @@
 </div>
 <div class="row">
     <form class="assets">
-        <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Купить криптовалюту</a>
+        <a href="/assets/add/cryptocurrency" class="btn btn-add-asset">Добавить криптовалюту</a>
         {% if last_cryptocurrency %}
         <div class="assets-form">
             <h3 class="white">Последняя транзакция криптовалютой</h3>
@@ -71,6 +77,9 @@
             <p>Количество: {{last_cryptocurrency.amount}}</p>
         </div>
         <a href="/assets/cryptocurrencies" class="btn btn-look-asset">Посмотреть всё</a>
+        {% else %}
+        <div class="assets-form"></div>
+        <div class="white-area"> </div>
         {% endif %}
     </form>
     <form class="assets-info">

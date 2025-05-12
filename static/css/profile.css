@@ -1,0 +1,103 @@
+form.profile {
+    margin-top: 10%;
+    margin-left: 20%;
+    line-height: 1;
+    color: white;
+    height: 500px;
+    padding: 30px;
+    width: 60%;
+    border: 5px solid gray;
+    border-radius: 20px;
+    background-color: rgb(70, 70, 70);
+}
+form.main_top {
+    margin-left: 0%;
+    height: 75px;
+    width: 100%;
+    border-radius: 0px;
+    padding: 10px;
+    background-color: rgba(60, 60, 60, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(8px);
+}
+.username {
+    text-align: center;
+    padding: 10px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px, solid grey;
+}
+.email {
+    text-align: center;
+    padding: 10px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px, solid grey;
+}
+.btn-tariff {
+    font-size: 150%;
+    color: white;
+    margin-top: 50px;
+    border-radius: 10px;
+    background-color: rgb(0, 121, 46);
+    border: 1px, solid rgb(0, 100, 30);
+    width: 60%;
+}
+.btn-tariff:hover {
+    font-size: 150%;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(10, 131, 56);
+    border: 1px, solid rgb(10, 110, 40);
+}
+.btn-home {
+    margin-top: 0.5%;
+    background-color: white;
+    color: rgb(60, 60, 60);
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.btn-home:hover {
+    background-color: rgb(180, 180, 180);
+    color: rgb(30, 30, 30);
+    border: 1px solid white;
+}
+.btn-upload {
+    width: 49.7%;
+    margin-top: 0.5%;
+    background-color: white;
+    color: rgb(60, 60, 60);
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.btn-upload:hover {
+    background-color: rgb(180, 180, 180);
+    color: rgb(30, 30, 30);
+    border: 1px solid white;
+}
+.btn-delete {
+    width: 49.7%;
+    margin-top: 0.5%;
+    background-color: white;
+    color: rgb(60, 60, 60);
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.btn-delete:hover {
+    background-color: rgb(180, 180, 180);
+    color: rgb(30, 30, 30);
+    border: 1px solid white;
+}
+div.row {
+    width: 100%;
+}
+h3.big {
+    margin: 3%;
+    font-size: 150%;
+}
+hr.pretty {
+    margin-top: 0%;
+    background-color: rgb(200, 200, 200);
+}

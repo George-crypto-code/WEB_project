@@ -1,39 +1,70 @@
-from flask import Flask, render_template, url_for, redirect, abort
+import os
+from flask import Flask, render_template, url_for, redirect, abort, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from forms.loginform import LoginForm
-from forms.registerform import RegisterForm
-from forms.add_share import AddShareForm
-from forms.add_currency import AddCurrencyForm
-from forms.add_cryptocurrency import AddCryptocurrencyForm
+from forms.loginform import LoginForm  # login form
+from forms.registerform import RegisterForm  # register form
+from forms.add_share import AddShareForm  # form for adding share
+from forms.add_currency import AddCurrencyForm  # form for adding currency
+from forms.add_cryptocurrency import AddCryptocurrencyForm  # form for adding cryptocurrency
 from data import db_session
-from data.get_prices import *
-from data.users import User
-from data.shares import Shares
-from data.currency import Currency
-from data.cryptocurrency import Cryptocurrency
+from data.get_prices import *  # funcs for get assets price
+from data.create_filename import generate_unique_filename
+from data.users import User  # user db
+from data.shares import Shares  # share db
+from data.currency import Currency  # currency db
+from data.cryptocurrency import Cryptocurrency  # cryptocurrency db
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'my_very_secret_key'
-login_manager = LoginManager()
-login_manager.init_app(app)
+app = Flask(__name__)  # init app
+app.config['SECRET_KEY'] = 'my_very_secret_key'  # key for work
+login_manager = LoginManager()  # add user
+login_manager.init_app(app)  # init current user
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id):  # load user form db
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
 
 @app.route('/')
-def index():
-    photo = url_for('static', filename='image/education.jpg')
+def index():  # basic page
     styles_css = url_for('static', filename='css/index.css')
+    all_assets, profile_image = [], None
+    if current_user.is_authenticated:
+        db_sess = db_session.create_session()
+        profile_image = url_for("static", filename=f"profile_image/{current_user.image}")
+        all_shares = {}
+        for share in  db_sess.query(Shares).filter(Shares.user_id == current_user.id).all():
+            if share.company not in all_shares:
+                all_shares[share.company] = {"amount": 0, "original_price": 0, "current_price": 0}
+            all_shares[share.company]["amount"] += share.amount
+            all_shares[share.company]["original_price"] += round(share.original_price, 2)
+            all_shares[share.company]["current_price"] += round(get_stock_price(share.company)) * share.amount
+        all_assets.append(all_shares)
+        all_currencies = {}
+        for currency in db_sess.query(Currency).filter(Currency.user_id == current_user.id).all():
+            if currency.name not in all_currencies:
+                all_currencies[currency.name] = {"amount": 0, "original_price": 0, "current_price": 0}
+            all_currencies[currency.name]["amount"] += currency.amount
+            all_currencies[currency.name]["original_price"] += round(currency.original_price, 2)
+            all_currencies[currency.name]["current_price"] += round(get_cbr_currency_rate(currency.name) * currency.amount, 2)
+        all_assets.append(all_currencies)
+        all_cryptocurrencies = {}
+        for cryptocurrency in db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all():
+            if cryptocurrency.name not in all_cryptocurrencies:
+                all_cryptocurrencies[cryptocurrency.name] = {"amount": 0, "original_price": 0, "current_price": 0}
+            all_cryptocurrencies[cryptocurrency.name]["amount"] += cryptocurrency.amount
+            all_cryptocurrencies[cryptocurrency.name]["original_price"] += round(cryptocurrency.original_price, 2)
+            all_cryptocurrencies[cryptocurrency.name]["current_price"] += round(get_crypto_price(cryptocurrency.name) * cryptocurrency.amount, 2)
+        all_assets.append(all_cryptocurrencies)
+        # print(all_assets)
+    photo = url_for('static', filename='image/education.jpg')
     return render_template("index.html", title="Управляйте своими финансами легко и эффективно", photo=photo,
-                           styles_css=styles_css)
+                           profile_image=profile_image, styles_css=styles_css, all_assets=all_assets)
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def register():
+def register():  # register page
     form = RegisterForm()
     styles_css = url_for('static', filename='css/register.css')
     if form.validate_on_submit():
@@ -44,9 +75,15 @@ def register():
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='Регистрация', form=form, styles_css=styles_css,
                                    message="Такой пользователь уже есть")
+        f = request.files['image']
+        extension = f.filename.split(".")[-1]
+        new_filename = generate_unique_filename(extension=extension)
+        with open(f"static/profile_image/{new_filename}", mode="wb") as file:
+            file.write(f.read())
         user = User(
             name=form.name.data,
-            email=form.email.data
+            email=form.email.data,
+            image=new_filename
         )
         user.set_password(form.password.data)
         db_sess.add(user)
@@ -56,7 +93,7 @@ def register():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login():  # login page
     form = LoginForm()
     styles_css = url_for('static', filename='css/login.css')
     if form.validate_on_submit():
@@ -71,13 +108,13 @@ def login():
 
 
 @app.route('/information')
-def information():
+def information():  # page with information
     styles_css = url_for('static', filename='css/information.css')
     return render_template('information.html', title='О сайте', styles_css=styles_css)
 
 
 @app.route('/assets')
-def assets():
+def assets():  # page for looking first asset
     styles_css = url_for('static', filename='css/assets.css')
     db_sess = db_session.create_session()
 
@@ -92,7 +129,7 @@ def assets():
     if a := db_sess.query(Currency).filter(Currency.user_id == current_user.id).all():
         last_currency = a[-1]
         price_for_one_currency = round(float(get_cbr_currency_rate(last_currency.name)), 2)
-        current_price_of_currency = round(float(last_share.amount * price_for_one_currency), 2)
+        current_price_of_currency = round(float(last_currency.amount * price_for_one_currency), 2)
         currency_profit = round(float(price_for_one_currency / last_currency.original_price), 2)
     else:
         last_currency, price_for_one_currency, current_price_of_currency, currency_profit = [None] * 4
@@ -107,19 +144,13 @@ def assets():
     price_for_one_asset = [price_for_one_share, price_for_one_currency, price_for_one_cryptocurrency]
     current_price = [current_price_of_share, current_price_of_currency, current_price_of_cryptocurrency]
     profit = [share_profit, currency_profit, cryptocurrency_profit]
-    # last_share = db_sess.query(Shares).filter(Shares.user_id == current_user.id).all()
-    # last_currency = db_sess.query(Currency).filter(Currency.user_id == current_user.id).all()
-    # last_cryptocurrency = db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all()
-    # last_assets = [last_share, last_currency, last_cryptocurrency]
-    # current_price = [round(a * b.amount, 2) for a, b in zip(price_for_one_asset, [last_share, last_currency, last_cryptocurrency])]
-    # profit = [round(a / b.original_price - 1, 3) for a, b in zip(current_price, [last_share, last_currency, last_cryptocurrency])]
     return render_template('assets.html', title='Активы', styles_css=styles_css, last_share=last_share,
                            last_currency=last_currency, last_cryptocurrency=last_cryptocurrency,
                            price_for_one_asset=price_for_one_asset, current_price=current_price, profit=profit)
 
 
 @app.route('/assets/shares')
-def shares():
+def shares():  # page for looking all shares
     styles_css = url_for('static', filename='css/shares.css')
     db_sess = db_session.create_session()
     all_shares = db_sess.query(Shares).filter(Shares.user_id == current_user.id).all()
@@ -134,7 +165,7 @@ def shares():
 
 
 @app.route('/assets/currencies')
-def currencies():
+def currencies():  # page for looking all currencies
     styles_css = url_for('static', filename='css/currencies.css')
     db_sess = db_session.create_session()
     all_currencies = db_sess.query(Currency).filter(Currency.user_id == current_user.id).all()
@@ -149,7 +180,7 @@ def currencies():
 
 
 @app.route('/assets/cryptocurrencies')
-def cryptocurrencies():
+def cryptocurrencies():  # page for looking all cryptocurrencies
     styles_css = url_for('static', filename='css/cryptocurrencies.css')
     db_sess = db_session.create_session()
     all_cryptocurrencies = db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all()
@@ -164,7 +195,7 @@ def cryptocurrencies():
 
 
 @app.route('/assets/add/<asset_type>', methods=['GET', 'POST'])
-def add(asset_type):
+def add(asset_type):  # page for adding assets
     styles_css = url_for('static', filename='css/add.css')
     if asset_type == "share":
         form = AddShareForm()
@@ -208,7 +239,7 @@ def add(asset_type):
 
 @app.route('/assets/share_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
-def news_delete(id):
+def share_delete(id):  # sell asset
     db_sess = db_session.create_session()
     news = db_sess.query(Shares).filter(Shares.id == id, Shares.user_id == current_user.id).first()
     if news:
@@ -244,6 +275,37 @@ def cryptocurrency_delete(id):
     else:
         abort(404)
     return redirect('/cryptocurrencies')
+
+
+@app.route('/tariff')
+@login_required
+def tariff():
+    styles_css = url_for('static', filename='css/tariff.css')
+    return render_template('tariff.html', title='Тарифы', styles_css=styles_css)
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    styles_css = url_for('static', filename='css/profile.css')
+    user_image = url_for('static', filename=f'profile_image/{current_user.image}')
+    return render_template('profile.html', title='Профиль', styles_css=styles_css, user_image=user_image)
+
+
+@app.route('/delete_user', methods=['GET', 'POST'])
+@login_required
+def delete_user():
+    db_sess = db_session.create_session()
+    for elem in db_sess.query(Shares).filter(Shares.user_id == current_user.id).all():
+        db_sess.delete(elem)
+    for elem in db_sess.query(Currency).filter(Currency.user_id == current_user.id).all():
+        db_sess.delete(elem)
+    for elem in db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all():
+        db_sess.delete(elem)
+    os.remove(f"static/profile_image/{current_user.image}")
+    db_sess.delete(db_sess.query(User).filter(User.id == current_user.id).first())
+    db_sess.commit()
+    return redirect('/')
 
 
 @app.route('/logout')

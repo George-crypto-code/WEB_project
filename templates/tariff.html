@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+    background-color: rgb(80, 80, 90);
+    }
+</style>
+<link rel="stylesheet" href={{styles_css}}>
+<form class="main_top">
+    <a href="/" class="btn btn-home">Домой</a>
+</form>
+<div class="row">
+    <form class="tariff">
+        <h3 class="big">ЗА МЕСЯЦ</h3>
+        <p>199 руб</p>
+        <a class="btn btn-tariff">Купить</a>
+    </form>
+    <form class="tariff">
+        <h3 class="big">ЗА ПОЛ ГОДА</h3>
+        <p>399 руб</p>
+        <a class="btn btn-tariff">Купить</a>
+    </form>
+    <form class="tariff">
+        <h3 class="big">ЗА ГОД</h3>
+        <p>699 руб</p>
+        <a class="btn btn-tariff">Купить</a>
+    </form>
+</div>
+{% endblock %}
