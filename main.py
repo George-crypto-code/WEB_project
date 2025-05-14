@@ -158,7 +158,7 @@ def shares():  # page for looking all shares
     for share in all_shares:
         price_for_one_share = round(float(get_stock_price(share.company)), 2)
         current_price_of_share = round(float(share.amount * price_for_one_share), 2)
-        share_profit = round(float(current_price_of_share / share.original_price), 2)
+        share_profit = round(float(current_price_of_share / share.original_price - 1), 2)
         extra_data.append((price_for_one_share, current_price_of_share, share_profit))
     return render_template('shares.html', title='Акции', styles_css=styles_css, all_shares=all_shares,
                            extra_data=extra_data)
@@ -173,7 +173,7 @@ def currencies():  # page for looking all currencies
     for currency in all_currencies:
         price_for_one_currency = round(float(get_cbr_currency_rate(currency.name)), 2)
         current_price_of_currency = round(float(currency.amount * price_for_one_currency), 2)
-        currency_profit = round(float(current_price_of_currency / currency.original_price), 2)
+        currency_profit = round(float(current_price_of_currency / currency.original_price - 1), 2)
         extra_data.append((price_for_one_currency, current_price_of_currency, currency_profit))
     return render_template('currencies.html', title='Акции', styles_css=styles_css, all_currencies=all_currencies,
                            extra_data=extra_data)
@@ -188,7 +188,7 @@ def cryptocurrencies():  # page for looking all cryptocurrencies
     for cryptocurrency in all_cryptocurrencies:
         price_for_one_cryptocurrency = round(float(get_crypto_price(cryptocurrency.name)), 2)
         current_price_of_cryptocurrency = round(float(cryptocurrency.amount * price_for_one_cryptocurrency), 2)
-        cryptocurrency_profit = round(float(current_price_of_cryptocurrency / cryptocurrency.original_price), 2)
+        cryptocurrency_profit = round(float(current_price_of_cryptocurrency / cryptocurrency.original_price - 1), 2)
         extra_data.append((price_for_one_cryptocurrency, current_price_of_cryptocurrency, cryptocurrency_profit))
     return render_template('cryptocurrencies.html', title='Акции', styles_css=styles_css,
                            all_cryptocurrencies=all_cryptocurrencies, extra_data=extra_data)
