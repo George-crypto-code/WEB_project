@@ -20,7 +20,7 @@
     <p class="email">email - {{current_user.email}}</p>
     <hr class="pretty">
     <p>options</p>
-    <a href="/logout" class="btn btn-delete">Выйти из аккаунта</a>
-    <a href="/delete_user" class="btn btn-delete">Удалить аккаунт</a>
+    <a href="/logout" class="btn btn-delete" onclick="return confirm('Вы действительно хотите выйти из аккаунта?');">Выйти из аккаунта</a>
+    <a href="/delete_user" class="btn btn-delete" onclick="return confirm('Вы действительно хотите удалить аккаунт?');">Удалить аккаунт</a>
 </form>
 {% endblock %}

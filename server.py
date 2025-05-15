@@ -34,7 +34,7 @@ def index():  # basic page
         db_sess = db_session.create_session()
         profile_image = url_for("static", filename=f"profile_image/{current_user.image}")
         all_shares = {}
-        for share in  db_sess.query(Shares).filter(Shares.user_id == current_user.id).all():
+        for share in db_sess.query(Shares).filter(Shares.user_id == current_user.id).all():
             if share.company not in all_shares:
                 all_shares[share.company] = {"amount": 0, "original_price": 0, "current_price": 0}
             all_shares[share.company]["amount"] += share.amount
@@ -47,7 +47,8 @@ def index():  # basic page
                 all_currencies[currency.name] = {"amount": 0, "original_price": 0, "current_price": 0}
             all_currencies[currency.name]["amount"] += currency.amount
             all_currencies[currency.name]["original_price"] += round(currency.original_price, 2)
-            all_currencies[currency.name]["current_price"] += round(get_cbr_currency_rate(currency.name) * currency.amount, 2)
+            all_currencies[currency.name]["current_price"] += round(
+                get_cbr_currency_rate(currency.name) * currency.amount, 2)
         all_assets.append(all_currencies)
         all_cryptocurrencies = {}
         for cryptocurrency in db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all():
@@ -55,7 +56,8 @@ def index():  # basic page
                 all_cryptocurrencies[cryptocurrency.name] = {"amount": 0, "original_price": 0, "current_price": 0}
             all_cryptocurrencies[cryptocurrency.name]["amount"] += cryptocurrency.amount
             all_cryptocurrencies[cryptocurrency.name]["original_price"] += round(cryptocurrency.original_price, 2)
-            all_cryptocurrencies[cryptocurrency.name]["current_price"] += round(get_crypto_price(cryptocurrency.name) * cryptocurrency.amount, 2)
+            all_cryptocurrencies[cryptocurrency.name]["current_price"] += round(
+                get_crypto_price(cryptocurrency.name) * cryptocurrency.amount, 2)
         all_assets.append(all_cryptocurrencies)
         # print(all_assets)
     photo = url_for('static', filename='image/education.jpg')
@@ -200,11 +202,16 @@ def add(asset_type):  # page for adding assets
     if asset_type == "share":
         form = AddShareForm()
         if form.validate_on_submit():
+            original_price = get_stock_price(form.company.data.strip().upper())
+            if original_price == -1:
+                return render_template('add.html', title='Активы', styles_css=styles_css, form=form,
+                                       asset_type=asset_type,
+                                       message="Такой акции не существует или название неправильно написано")
             db_sess = db_session.create_session()
             share = Shares()
             share.company = form.company.data.upper()
             share.amount = form.amount.data
-            share.original_price = round(float(form.amount.data) * float(get_stock_price(form.company.data)), 2)
+            share.original_price = round(float(form.amount.data) * float(original_price), 2)
             current_user.shares.append(share)
             db_sess.merge(current_user)
             db_sess.commit()
@@ -212,12 +219,16 @@ def add(asset_type):  # page for adding assets
     elif asset_type == "currency":
         form = AddCurrencyForm()
         if form.validate_on_submit():
+            original_price = get_cbr_currency_rate(form.name.data.upper().strip())
+            if original_price == -1:
+                return render_template('add.html', title='Активы', styles_css=styles_css, form=form,
+                                       message="Такой валюты не существует или название неправильно написано",
+                                       asset_type=asset_type)
             db_sess = db_session.create_session()
             currency = Currency()
             currency.name = form.name.data.upper()
             currency.amount = form.amount.data
-            currency.original_price = round(float(form.amount.data) * float(
-                get_cbr_currency_rate(form.name.data.upper().strip())), 2)
+            currency.original_price = round(float(form.amount.data) * float(original_price), 2)
             current_user.currency.append(currency)
             db_sess.merge(current_user)
             db_sess.commit()
@@ -225,11 +236,16 @@ def add(asset_type):  # page for adding assets
     else:
         form = AddCryptocurrencyForm()
         if form.validate_on_submit():
+            original_price = get_crypto_price(form.name.data).strip().lower()
+            if original_price == -1:
+                return render_template('add.html', title='Активы', styles_css=styles_css, form=form,
+                                       message="Такой криптовалюты не существует или название неправильно написано",
+                                       asset_type=asset_type)
             db_sess = db_session.create_session()
             cryptocurrency = Cryptocurrency()
             cryptocurrency.name = form.name.data.capitalize()
             cryptocurrency.amount = form.amount.data
-            cryptocurrency.original_price = round(float(form.amount.data) * float(get_crypto_price(form.name.data)), 2)
+            cryptocurrency.original_price = round(float(form.amount.data) * float(original_price), 2)
             current_user.cryptocurrency.append(cryptocurrency)
             db_sess.merge(current_user)
             db_sess.commit()

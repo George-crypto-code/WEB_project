@@ -6,12 +6,15 @@ from datetime import datetime
 
 
 def get_stock_price(ticker):
-    stock = yf.Ticker(ticker)
-    data = stock.history(period="1d")
-    if data.empty:
+    try:
+        stock = yf.Ticker(ticker)
+        data = stock.history(period="1d")
+        if data.empty:
+            return -1
+        last_price = data['Close'].iloc[-1]
+        return float(last_price)
+    except Exception:
         return -1
-    last_price = data['Close'].iloc[-1]
-    return float(last_price)
 
 
 def get_cbr_currency_rate(currency_code="USD"):
@@ -25,12 +28,17 @@ def get_cbr_currency_rate(currency_code="USD"):
         if char_code == currency_code:
             value = valute.find("Value").text.replace(",", ".")
             return float(value)
+    return -1
 
 
 def get_crypto_price(coin_id):
     vs_currency = "usd"
     cg = CoinGeckoAPI()
-    price_data = cg.get_price(ids=coin_id, vs_currencies=vs_currency)
-    if price_data:
-        price = price_data[coin_id.lower()][vs_currency]
-        return float(price)
+    try:
+        price_data = cg.get_price(ids=coin_id, vs_currencies=vs_currency)
+        if price_data:
+            price = price_data[coin_id.lower()][vs_currency]
+            return float(price)
+        return -1
+    except Exception:
+        return -1

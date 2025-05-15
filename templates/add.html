@@ -33,8 +33,6 @@
         </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
-    {{message}}
 
 
     {% elif asset_type == 'currency' %}
@@ -59,8 +57,6 @@
         </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
-    {{message}}
 
 
     {% else %}
@@ -85,8 +81,8 @@
         </p>
         {% endfor %}
     </div>
-    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
-    {{message}}
     {% endif %}
+    <p>{{ form.submit(type="submit", class="btn btn-sell") }}</p>
+    <a class="message">{{message}}</a>
 </form>
 {% endblock %}

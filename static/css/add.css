@@ -54,3 +54,7 @@ form.add-form {
     border: 1px, solid rgb(10, 110, 40);
     width: 30%;
 }
+a.message {
+    margin-top: 0%;
+    color: white
+}
