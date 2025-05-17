@@ -1,4 +1,7 @@
 import os
+from data.info.all_shares import ALL_SHARES
+from data.info.all_currency import ALL_CURRENCY
+from data.info.all_cryptocurrency import ALL_CRYPTOCURRENCY
 from flask import Flask, render_template, url_for, redirect, abort, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms.loginform import LoginForm  # login form
@@ -122,25 +125,25 @@ def assets():  # page for looking first asset
 
     if a := db_sess.query(Shares).filter(Shares.user_id == current_user.id).all():
         last_share = a[-1]
-        price_for_one_share = round(float(get_stock_price(last_share.company)), 2)
-        current_price_of_share = round(float(last_share.amount * price_for_one_share), 2)
-        share_profit = round(float(current_price_of_share / last_share.original_price), 2)
+        price_for_one_share = float(get_stock_price(last_share.company))
+        current_price_of_share = float(last_share.amount * price_for_one_share)
+        share_profit = float(current_price_of_share / last_share.original_price)
     else:
         last_share, price_for_one_share, current_price_of_share, share_profit = [None] * 4
 
     if a := db_sess.query(Currency).filter(Currency.user_id == current_user.id).all():
         last_currency = a[-1]
-        price_for_one_currency = round(float(get_cbr_currency_rate(last_currency.name)), 2)
-        current_price_of_currency = round(float(last_currency.amount * price_for_one_currency), 2)
-        currency_profit = round(float(price_for_one_currency / last_currency.original_price), 2)
+        price_for_one_currency = float(get_cbr_currency_rate(last_currency.name))
+        current_price_of_currency = float(last_currency.amount * price_for_one_currency)
+        currency_profit = float(price_for_one_currency / last_currency.original_price)
     else:
         last_currency, price_for_one_currency, current_price_of_currency, currency_profit = [None] * 4
 
     if a := db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all():
         last_cryptocurrency = a[-1]
-        price_for_one_cryptocurrency = round(float(get_crypto_price(last_cryptocurrency.name)), 2)
-        current_price_of_cryptocurrency = round(float(last_cryptocurrency.amount * price_for_one_cryptocurrency), 2)
-        cryptocurrency_profit = round(float(current_price_of_cryptocurrency / last_cryptocurrency.original_price), 2)
+        price_for_one_cryptocurrency = float(get_crypto_price(last_cryptocurrency.name))
+        current_price_of_cryptocurrency = float(last_cryptocurrency.amount * price_for_one_cryptocurrency)
+        cryptocurrency_profit = float(current_price_of_cryptocurrency / last_cryptocurrency.original_price)
     else:
         last_cryptocurrency, price_for_one_cryptocurrency, current_price_of_cryptocurrency, cryptocurrency_profit = [None] * 4
     price_for_one_asset = [price_for_one_share, price_for_one_currency, price_for_one_cryptocurrency]
@@ -158,9 +161,9 @@ def shares():  # page for looking all shares
     all_shares = db_sess.query(Shares).filter(Shares.user_id == current_user.id).all()
     extra_data = []
     for share in all_shares:
-        price_for_one_share = round(float(get_stock_price(share.company)), 2)
-        current_price_of_share = round(float(share.amount * price_for_one_share), 2)
-        share_profit = round(float(current_price_of_share / share.original_price - 1), 2)
+        price_for_one_share = float(get_stock_price(share.company))
+        current_price_of_share = float(share.amount * price_for_one_share)
+        share_profit = float(current_price_of_share / share.original_price - 1)
         extra_data.append((price_for_one_share, current_price_of_share, share_profit))
     return render_template('shares.html', title='Акции', styles_css=styles_css, all_shares=all_shares,
                            extra_data=extra_data)
@@ -173,9 +176,9 @@ def currencies():  # page for looking all currencies
     all_currencies = db_sess.query(Currency).filter(Currency.user_id == current_user.id).all()
     extra_data = []
     for currency in all_currencies:
-        price_for_one_currency = round(float(get_cbr_currency_rate(currency.name)), 2)
-        current_price_of_currency = round(float(currency.amount * price_for_one_currency), 2)
-        currency_profit = round(float(current_price_of_currency / currency.original_price - 1), 2)
+        price_for_one_currency = float(get_cbr_currency_rate(currency.name))
+        current_price_of_currency = float(currency.amount * price_for_one_currency)
+        currency_profit = float(current_price_of_currency / currency.original_price - 1)
         extra_data.append((price_for_one_currency, current_price_of_currency, currency_profit))
     return render_template('currencies.html', title='Акции', styles_css=styles_css, all_currencies=all_currencies,
                            extra_data=extra_data)
@@ -188,9 +191,9 @@ def cryptocurrencies():  # page for looking all cryptocurrencies
     all_cryptocurrencies = db_sess.query(Cryptocurrency).filter(Cryptocurrency.user_id == current_user.id).all()
     extra_data = []
     for cryptocurrency in all_cryptocurrencies:
-        price_for_one_cryptocurrency = round(float(get_crypto_price(cryptocurrency.name)), 2)
-        current_price_of_cryptocurrency = round(float(cryptocurrency.amount * price_for_one_cryptocurrency), 2)
-        cryptocurrency_profit = round(float(current_price_of_cryptocurrency / cryptocurrency.original_price - 1), 2)
+        price_for_one_cryptocurrency = float(get_crypto_price(cryptocurrency.name))
+        current_price_of_cryptocurrency = float(cryptocurrency.amount * price_for_one_cryptocurrency)
+        cryptocurrency_profit = float(current_price_of_cryptocurrency / cryptocurrency.original_price - 1)
         extra_data.append((price_for_one_cryptocurrency, current_price_of_cryptocurrency, cryptocurrency_profit))
     return render_template('cryptocurrencies.html', title='Акции', styles_css=styles_css,
                            all_cryptocurrencies=all_cryptocurrencies, extra_data=extra_data)
@@ -211,7 +214,7 @@ def add(asset_type):  # page for adding assets
             share = Shares()
             share.company = form.company.data.upper()
             share.amount = form.amount.data
-            share.original_price = round(float(form.amount.data) * float(original_price), 2)
+            share.original_price = float(form.amount.data) * float(original_price)
             current_user.shares.append(share)
             db_sess.merge(current_user)
             db_sess.commit()
@@ -228,7 +231,7 @@ def add(asset_type):  # page for adding assets
             currency = Currency()
             currency.name = form.name.data.upper()
             currency.amount = form.amount.data
-            currency.original_price = round(float(form.amount.data) * float(original_price), 2)
+            currency.original_price = float(form.amount.data) * float(original_price)
             current_user.currency.append(currency)
             db_sess.merge(current_user)
             db_sess.commit()
@@ -236,7 +239,7 @@ def add(asset_type):  # page for adding assets
     else:
         form = AddCryptocurrencyForm()
         if form.validate_on_submit():
-            original_price = get_crypto_price(form.name.data).strip().lower()
+            original_price = get_crypto_price(form.name.data.strip().lower())
             if original_price == -1:
                 return render_template('add.html', title='Активы', styles_css=styles_css, form=form,
                                        message="Такой криптовалюты не существует или название неправильно написано",
@@ -245,12 +248,13 @@ def add(asset_type):  # page for adding assets
             cryptocurrency = Cryptocurrency()
             cryptocurrency.name = form.name.data.capitalize()
             cryptocurrency.amount = form.amount.data
-            cryptocurrency.original_price = round(float(form.amount.data) * float(original_price), 2)
+            cryptocurrency.original_price = float(form.amount.data) * float(original_price)
             current_user.cryptocurrency.append(cryptocurrency)
             db_sess.merge(current_user)
             db_sess.commit()
             return redirect('/assets')
-    return render_template('add.html', title='Активы', styles_css=styles_css, asset_type=asset_type, form=form)
+    return render_template('add.html', title='Активы', styles_css=styles_css, asset_type=asset_type, form=form,
+                           data=[ALL_SHARES, ALL_CURRENCY, ALL_CURRENCY])
 
 
 @app.route('/assets/share_delete/<int:id>', methods=['GET', 'POST'])

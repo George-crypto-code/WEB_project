@@ -16,8 +16,13 @@
 
     {{ form.hidden_tag() }}
     <div class="name">
+        <datalist id="shares">
+            {% for share in data[0] %}
+            <option value="{{share}}">
+                {% endfor %}
+        </datalist>
         {{ form.company.label }}<br>
-        {{ form.company(class="form-control") }}<br>
+        {{ form.company(class="form-control", list="shares") }}<br>
         {% for error in form.company.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}

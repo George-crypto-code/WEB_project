@@ -7,7 +7,7 @@ class Shares(SqlAlchemyBase):
     __tablename__ = 'shares'
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     company = sqlalchemy.Column(sqlalchemy.String)
-    amount = sqlalchemy.Column(sqlalchemy.Integer)
+    amount = sqlalchemy.Column(sqlalchemy.Float)
     original_price = sqlalchemy.Column(sqlalchemy.Float)
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
     user = orm.relationship('User')
