@@ -16,7 +16,8 @@
     <div class="register">
         <a href="/information" class="btn btn-information">Информация</a>
         <a href="/assets" class="btn btn-assets">Ваши активы</a>
-        <a href="/profile"><img src="{{profile_image}}" width="42px" height="42px" alt="здесь должна была быть картинка, но не нашлась"></a>
+        <a href="/profile"><img src="{{profile_image}}" width="42px" height="42px"
+                                alt="здесь должна была быть картинка, но не нашлась"></a>
     </div>
     {% else %}
     <div class="unregister">
@@ -102,7 +103,9 @@
                 <th scope="row">{{cryptocurrency}}</th>
                 <td>{{all_assets[2][cryptocurrency]["amount"]}}</td>
                 <td>{{all_assets[2][cryptocurrency]["original_price"]}} USD</td>
-                <td>{{all_assets[2][cryptocurrency]["current_price"] - all_assets[2][cryptocurrency]["original_price"]}} USD</td>
+                <td>{{all_assets[2][cryptocurrency]["current_price"] - all_assets[2][cryptocurrency]["original_price"]}}
+                    USD
+                </td>
             </tr>
             {% endfor %}
             </tbody>
@@ -117,5 +120,58 @@
     <p class="main_bottom_text">отслеживания доходов и расходов, планирования</p>
     <p class="main_bottom_text">бюджета и достижения ваших финансовых целей.</p>
     {% endif %}
+    <div class="assets">
+        <h3>Самые популярные акции</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                {% for share in top_assets[0] %}
+                <th scope="col" class="center">{{share}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for share in top_assets[0] %}
+                <th scope="col" class="center">{{top_assets[0][share]}} USD</th>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+        <h3>Самые популярные валюты</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                {% for share in top_assets[1] %}
+                <th scope="col" class="center">{{share}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for share in top_assets[1] %}
+                <th scope="col" class="center">{{top_assets[1][share]}} РУБ</th>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+        <h3>Самые популярные криптовалюты</h3>
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                {% for share in top_assets[2] %}
+                <th scope="col" class="center">{{share}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for share in top_assets[2] %}
+                <th scope="col" class="center">{{top_assets[2][share]}} USD</th>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </form>
 {% endblock %}

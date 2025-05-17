@@ -609,3 +609,4 @@ ALL_SHARES = ['A', 'AA', 'AACB', 'AACBR', 'AACBU', 'AACG', 'AACT', 'AACT.U', 'AA
               'ZIPP', 'ZJK', 'ZJYL', 'ZJZZT', 'ZK', 'ZKH', 'ZKIN', 'ZLAB', 'ZM', 'ZNTL', 'ZONE', 'ZOOZ', 'ZOOZW', 'ZS',
               'ZSPC', 'ZTEK', 'ZTEN', 'ZTO', 'ZTOP', 'ZTR', 'ZTRE', 'ZTS', 'ZTWO', 'ZUMZ', 'ZURA', 'ZVIA', 'ZVRA',
               'ZVSA', 'ZVZZT', 'ZWS', 'ZWZZT', 'ZXYZ.A', 'ZXZZT', 'ZYBT', 'ZYME', 'ZYXI', 'ZZZ']
+TOP_SHARES = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META']

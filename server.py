@@ -1,7 +1,7 @@
 import os
-from data.info.all_shares import ALL_SHARES
-from data.info.all_currency import ALL_CURRENCY
-from data.info.all_cryptocurrency import ALL_CRYPTOCURRENCY
+from data.info.all_shares import ALL_SHARES, TOP_SHARES
+from data.info.all_currency import ALL_CURRENCY, TOP_CURRENCY
+from data.info.all_cryptocurrency import ALL_CRYPTOCURRENCY, TOP_CRYPTOCURRENCY
 from flask import Flask, render_template, url_for, redirect, abort, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms.loginform import LoginForm  # login form
@@ -64,8 +64,12 @@ def index():  # basic page
         all_assets.append(all_cryptocurrencies)
         # print(all_assets)
     photo = url_for('static', filename='image/education.jpg')
+    top_shares = {share: get_stock_price(share) for share in TOP_SHARES}
+    top_currency = {currency: get_cbr_currency_rate(currency) for currency in TOP_CURRENCY}
+    top_cryptocurrency = {cryptocurrency: get_crypto_price(cryptocurrency) for cryptocurrency in TOP_CRYPTOCURRENCY}
     return render_template("index.html", title="Управляйте своими финансами легко и эффективно", photo=photo,
-                           profile_image=profile_image, styles_css=styles_css, all_assets=all_assets)
+                           profile_image=profile_image, styles_css=styles_css, all_assets=all_assets,
+                           top_assets=[top_shares, top_currency, top_cryptocurrency])
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -254,7 +258,7 @@ def add(asset_type):  # page for adding assets
             db_sess.commit()
             return redirect('/assets')
     return render_template('add.html', title='Активы', styles_css=styles_css, asset_type=asset_type, form=form,
-                           data=[ALL_SHARES, ALL_CURRENCY, ALL_CURRENCY])
+                           data=[ALL_SHARES, ALL_CURRENCY, ALL_CRYPTOCURRENCY])
 
 
 @app.route('/assets/share_delete/<int:id>', methods=['GET', 'POST'])

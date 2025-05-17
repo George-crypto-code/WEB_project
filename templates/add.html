@@ -45,8 +45,13 @@
 
     {{ form.hidden_tag() }}
     <div class="name">
+        <datalist id="currency">
+            {% for currency in data[1] %}
+            <option value="{{currency}}">
+                {% endfor %}
+        </datalist>
         {{ form.name.label }}<br>
-        {{ form.name(class="form-control") }}<br>
+        {{ form.name(class="form-control", list="currency") }}<br>
         {% for error in form.name.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -69,8 +74,13 @@
 
     {{ form.hidden_tag() }}
     <div class="name">
+        <datalist id="cryptocurrency">
+            {% for cryptocurrency in data[2] %}
+            <option value="{{cryptocurrency}}">
+                {% endfor %}
+        </datalist>
         {{ form.name.label }}<br>
-        {{ form.name(class="form-control") }}<br>
+        {{ form.name(class="form-control", list="cryptocurrency") }}<br>
         {% for error in form.name.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
